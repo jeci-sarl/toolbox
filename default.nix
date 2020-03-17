@@ -22,7 +22,7 @@ let
 in rec {
 
   inherit (pkgs) ansible kubectl stern vault docker-compose cfssl
-                 yq jq gopass kubectx aws direnv cue go gnupg curl;
+                 yq jq gopass kubectx aws cue go gnupg curl;
 
   helm = pkgs.kubernetes-helm;
 
@@ -45,5 +45,7 @@ in rec {
     { source = sources.tf; inherit terraform; };
 
   kswitch = pkgs.callPackage ./pkgs/kswitch {};
+
+  direnv = pkgs.callPackage ./pkgs/direnv {};
 
 }

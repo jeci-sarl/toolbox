@@ -3,18 +3,30 @@
 
 buildGoPackage rec {
   name = "direnv-caascad-${version}";
-  version = "2.21.2-cc.2";
+  version = "2.21.2-cc.3";
 
   goPackagePath = "github.com/Caascad/direnv";
 
   src = fetchFromGitHub {
     owner = "Caascad";
     repo = "direnv";
-    rev = "${version}";
-    sha256 = "1zd1a3wb4w3jaavvjadyqxw3c7ckxdbcvb7vqj79pry8s328fpaf";
+    rev = "33c4615bd4aa2ad269bf19f1d33f1d8212dfd4cb";
+    sha256 = "1bjgf8ywh5dhhfr9lkj084fxzarghb2b8msf8di1agmz26wlbv2l";
   };
 
   goDeps = ./deps.nix;
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $bin
+    dir="$NIX_BUILD_TOP/go/bin"
+    [ -e "$dir" ] && cp -r $dir $bin
+
+    cp $NIX_BUILD_TOP/go/src/$goPackagePath/script/source_hash $bin/bin/source_hash
+
+    runHook postInstall
+  '';
 
   meta = with stdenv.lib; {
       description = "A shell extension that manages your environment";

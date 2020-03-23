@@ -3,15 +3,15 @@
 
 buildGoPackage rec {
   name = "direnv-caascad-${version}";
-  version = "2.21.2-cc.3";
+  version = "2.21.2-cc.4";
 
   goPackagePath = "github.com/Caascad/direnv";
 
   src = fetchFromGitHub {
     owner = "Caascad";
     repo = "direnv";
-    rev = "33c4615bd4aa2ad269bf19f1d33f1d8212dfd4cb";
-    sha256 = "1bjgf8ywh5dhhfr9lkj084fxzarghb2b8msf8di1agmz26wlbv2l";
+    rev = "${version}";
+    sha256 = "1y3p4gan76wiy3fwf6zyk31kihaqp1i5q2knhzfwhr8waz66cmwz";
   };
 
   goDeps = ./deps.nix;
@@ -23,7 +23,7 @@ buildGoPackage rec {
     dir="$NIX_BUILD_TOP/go/bin"
     [ -e "$dir" ] && cp -r $dir $bin
 
-    cp $NIX_BUILD_TOP/go/src/$goPackagePath/script/source_hash $bin/bin/source_hash
+    cp $NIX_BUILD_TOP/go/src/$goPackagePath/script/direnv_update_hash $bin/bin/direnv_update_hash
 
     runHook postInstall
   '';
